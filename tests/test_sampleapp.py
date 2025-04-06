@@ -1,7 +1,11 @@
-import time
-
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import time
+from selenium.webdriver.support.wait import WebDriverWait
+
 
 def test_default_login_form_view():
     driver = webdriver.Chrome()
@@ -23,3 +27,28 @@ def test_default_login_form_view():
     assert submit_button_text == "Log In"
 
     driver.quit()
+
+
+
+def test_success_login_message():
+    user_name = "user"
+    user_password = "pwd"
+
+    driver = webdriver.Chrome()
+    driver.get("http://uitestingplayground.com/sampleapp")
+
+    driver.find_element(By.NAME, "UserName").send_keys(user_name)
+    driver.find_element(By.NAME, "Password").send_keys(user_password)
+    driver.find_element(By.ID, "login").click()
+
+    success_message_element = driver.find_element(By.ID, "loginstatus")
+    success_message_text = success_message_element.text
+    success_message_color = success_message_element.value_of_css_property("color")
+    time.sleep(4)
+    assert success_message_element.is_displayed()
+    assert success_message_text == "Welcome, user!"
+    assert success_message_color == "rgba(40, 167, 69, 1)"
+
+    driver.quit()
+
+
