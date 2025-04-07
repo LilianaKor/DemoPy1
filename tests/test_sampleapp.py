@@ -1,10 +1,6 @@
-import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 import time
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 def test_default_login_form_view():
@@ -29,7 +25,6 @@ def test_default_login_form_view():
     driver.quit()
 
 
-
 def test_success_login_message():
     user_name = "user"
     user_password = "pwd"
@@ -50,5 +45,3 @@ def test_success_login_message():
     assert success_message_color == "rgba(40, 167, 69, 1)"
 
     driver.quit()
-
-
